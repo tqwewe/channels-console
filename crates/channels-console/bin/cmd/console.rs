@@ -1,3 +1,4 @@
+use channels_console::{format_bytes, ChannelState, ChannelType, SerializableChannelStats};
 use clap::Parser;
 use crossterm::event::{self, Event, KeyCode, KeyEvent, KeyEventKind};
 use eyre::Result;
@@ -12,7 +13,6 @@ use ratatui::{
 };
 use std::io;
 use std::time::{Duration, Instant, SystemTime};
-use channels_console::{format_bytes, ChannelState, ChannelType, SerializableChannelStats};
 
 #[derive(Debug, Parser)]
 pub struct ConsoleArgs {
