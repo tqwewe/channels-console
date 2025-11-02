@@ -1,9 +1,13 @@
 use std::mem;
+use std::sync::LazyLock;
 use tokio::sync::mpsc;
 use tokio::sync::mpsc::{Receiver, Sender, UnboundedReceiver, UnboundedSender};
 use tokio::sync::oneshot;
 
 use crate::{init_stats_state, ChannelType, StatsEvent};
+
+static RT: LazyLock<tokio::runtime::Runtime> =
+    LazyLock::new(|| tokio::runtime::Builder::new_multi_thread().build().unwrap());
 
 /// Wrap the inner channel with proxy ends. Returns (outer_tx, outer_rx).
 /// All messages pass through the two forwarders.
@@ -36,7 +40,7 @@ pub(crate) fn wrap_channel<T: Send + 'static>(
     let (close_signal_tx, mut close_signal_rx) = oneshot::channel::<()>();
 
     // Forward outer -> inner (proxy the send path)
-    tokio::spawn(async move {
+    RT.spawn(async move {
         loop {
             tokio::select! {
                 msg = to_inner_rx.recv() => {
@@ -63,7 +67,7 @@ pub(crate) fn wrap_channel<T: Send + 'static>(
     });
 
     // Forward inner -> outer (proxy the recv path)
-    tokio::spawn(async move {
+    RT.spawn(async move {
         loop {
             tokio::select! {
                 msg = inner_rx.recv() => {
@@ -122,7 +126,7 @@ pub(crate) fn wrap_unbounded<T: Send + 'static>(
     let (close_signal_tx, mut close_signal_rx) = oneshot::channel::<()>();
 
     // Forward outer -> inner (proxy the send path)
-    tokio::spawn(async move {
+    RT.spawn(async move {
         loop {
             tokio::select! {
                 msg = to_inner_rx.recv() => {
@@ -149,7 +153,7 @@ pub(crate) fn wrap_unbounded<T: Send + 'static>(
     });
 
     // Forward inner -> outer (proxy the recv path)
-    tokio::spawn(async move {
+    RT.spawn(async move {
         loop {
             tokio::select! {
                 msg = inner_rx.recv() => {
@@ -209,7 +213,7 @@ pub(crate) fn wrap_oneshot<T: Send + 'static>(
     let (close_signal_tx, mut close_signal_rx) = oneshot::channel::<()>();
 
     // Monitor outer receiver and drop inner receiver when outer is dropped
-    tokio::spawn(async move {
+    RT.spawn(async move {
         let mut inner_rx = Some(inner_rx);
         let mut message_received = false;
         tokio::select! {
@@ -240,7 +244,7 @@ pub(crate) fn wrap_oneshot<T: Send + 'static>(
     });
 
     // Forward outer -> inner (proxy the send path)
-    tokio::spawn(async move {
+    RT.spawn(async move {
         let mut message_sent = false;
         tokio::select! {
             msg = outer_rx_proxy => {
