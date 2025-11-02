@@ -5,7 +5,7 @@
 
 This crate provides an easy-to-configure way to monitor Tokio channels. Track per-channel metrics such as queue depth, send/receive rates, and memory usage, directly from your terminal.
 
-[tokio-console](https://github.com/tokio-rs/console) is an awesome project, but it currently provides insights only into tasks and resources. [There are plans](https://github.com/tokio-rs/console/issues/278) to add support for `mpsc` channels, but it's still in progress. This lib tries to fill this gap, but offering a _quick & easy_ way to instrument Tokio channels in any Rust application.
+[tokio-console](https://github.com/tokio-rs/console) is an awesome project, but it currently provides insights only into tasks and resources. [There are plans](https://github.com/tokio-rs/console/issues/278) to add support for `mpsc` channels, but it's still in progress. This lib tries to fill this gap, by offering a _quick & easy_ way to instrument Tokio channels in any Rust application.
 
 ## Features
 
@@ -102,7 +102,7 @@ In the background a HTTP server process exposes gathered metrics in a JSON forma
 
 ### There be bugs 🐛
 
-This library has just been released. I've tested it with several nontrivial apps, and it consistently produced reliable metrics. However, please note that enabling monitoring can subtly affect channel behavior in some cases. For example, using `try_send` may not return an error as expected, since the proxy layers effectively increase total capacity. I'm actively improving the library, so any feedback, issues, bug reports are very welcome.
+This library has just been released. I've tested it with several apps, and it consistently produced reliable metrics. However, please note that enabling monitoring can subtly affect channel behavior in some cases. For example, using `try_send` may not return an error as expected, since the proxy layers effectively increase total capacity. I'm actively improving the library, so any feedback, issues, bug reports are welcome.
 
 ## API
 
@@ -113,7 +113,7 @@ The `instrument!` macro is the primary way to monitor channels. It wraps channel
 **Supported Channel Types:**
 - `tokio::sync::mpsc::channel` - Bounded MPSC channels
 - `tokio::sync::mpsc::unbounded_channel` - Unbounded MPSC channels
-- `tokio::sync::oneshot::channel` - Oneshot channels
+- `tokio::sync::oneshot` - Oneshot channels
 
 **Basic Usage:**
 
