@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.2] - 2025-11-05
+
+### 🐛 Bug Fixes
+
+- Use std::Instant for timestamps
+- Improve queue data display
+- Add NO_COLOR selection indicator
+- Fix setting channel full state
+
+### 🚜 Refactor
+
+- Improve table state logic
+
+### ⚙️ Miscellaneous Tasks
+
+- Release 0.2.2
+
 ## [0.2.1] - 2025-11-04
 
 ### 🚀 Features
