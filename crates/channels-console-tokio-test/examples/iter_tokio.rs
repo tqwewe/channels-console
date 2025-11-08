@@ -11,7 +11,7 @@ async fn main() {
         let (tx, mut rx) = tokio::sync::mpsc::channel::<i32>(10);
 
         #[cfg(feature = "channels-console")]
-        let (tx, mut rx) = channels_console::instrument!((tx, rx));
+        let (tx, mut rx) = channels_console::instrument!((tx, rx), label = "bounded");
 
         println!("  - Created bounded channel {}", i);
 

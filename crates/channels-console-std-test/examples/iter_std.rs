@@ -30,7 +30,7 @@ fn main() {
         let (tx, rx) = mpsc::sync_channel::<i32>(10);
 
         #[cfg(feature = "channels-console")]
-        let (tx, rx) = channels_console::instrument!((tx, rx), capacity = 10);
+        let (tx, rx) = channels_console::instrument!((tx, rx), capacity = 10, label = "bounded");
 
         println!("  - Created bounded channel {}", i);
 

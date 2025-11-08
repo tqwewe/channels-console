@@ -691,7 +691,11 @@ fn compare_channel_stats(a: &ChannelStats, b: &ChannelStats) -> std::cmp::Orderi
     match (a.label.is_some(), b.label.is_some()) {
         (true, false) => std::cmp::Ordering::Less,
         (false, true) => std::cmp::Ordering::Greater,
-        (true, true) => a.label.unwrap().cmp(b.label.unwrap()),
+        (true, true) => a
+            .label
+            .unwrap()
+            .cmp(b.label.unwrap())
+            .then_with(|| a.iter.cmp(&b.iter)),
         (false, false) => a.source.cmp(b.source).then_with(|| a.iter.cmp(&b.iter)),
     }
 }

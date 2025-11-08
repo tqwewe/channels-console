@@ -200,9 +200,9 @@ pub mod tests {
             "examples/iter_std.rs:17",
             "examples/iter_std.rs:17-2",
             "examples/iter_std.rs:17-3",
-            "examples/iter_std.rs:33",
-            "examples/iter_std.rs:33-2",
-            "examples/iter_std.rs:33-3",
+            "bounded",
+            "bounded-2",
+            "bounded-3",
         ];
 
         for expected in all_expected {

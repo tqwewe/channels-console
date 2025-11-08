@@ -251,9 +251,9 @@ pub mod tests {
         let stdout = String::from_utf8_lossy(&output.stdout);
 
         let all_expected = [
-            "examples/iter_tokio.rs:14",
-            "examples/iter_tokio.rs:14-2",
-            "examples/iter_tokio.rs:14-3",
+            "bounded",
+            "bounded-2",
+            "bounded-3",
             "examples/iter_tokio.rs:29",
             "examples/iter_tokio.rs:29-2",
             "examples/iter_tokio.rs:29-3",

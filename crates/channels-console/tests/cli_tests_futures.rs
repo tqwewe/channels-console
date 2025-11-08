@@ -258,12 +258,12 @@ pub mod tests {
             "examples/iter_futures.rs:17",
             "examples/iter_futures.rs:17-2",
             "examples/iter_futures.rs:17-3",
-            "examples/iter_futures.rs:33",
-            "examples/iter_futures.rs:33-2",
-            "examples/iter_futures.rs:33-3",
-            "examples/iter_futures.rs:49",
-            "examples/iter_futures.rs:49-2",
-            "examples/iter_futures.rs:49-3",
+            "bounded",
+            "bounded-2",
+            "bounded-3",
+            "examples/iter_futures.rs:50",
+            "examples/iter_futures.rs:50-2",
+            "examples/iter_futures.rs:50-3",
         ];
 
         for expected in all_expected {
