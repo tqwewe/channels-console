@@ -75,12 +75,16 @@ impl ConsoleArgs {
 
 impl App {
     pub fn run(&mut self, terminal: &mut DefaultTerminal) -> io::Result<()> {
-        const REFRESH_INTERVAL: Duration = Duration::from_millis(200);
+        let refresh_interval = std::env::var("CHANNELS_CONSOLE_TUI_REFRESH_MS")
+            .ok()
+            .and_then(|s| s.parse::<u64>().ok())
+            .map(Duration::from_millis)
+            .unwrap_or(Duration::from_millis(200));
 
         self.refresh_data();
 
         while !self.exit {
-            if !self.paused && self.last_refresh.elapsed() >= REFRESH_INTERVAL {
+            if !self.paused && self.last_refresh.elapsed() >= refresh_interval {
                 self.refresh_data();
             }
 
